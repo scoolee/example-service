@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Echo API
+  description: |-
+    This is an OpenAPI 3 specification of very simple echo service.
+  version: '1.0'
+tags:
+  - name: echo
+    description: Echo API
+paths:
+  /echo:
+    post:
+      summary: Echoes a text message
+      tags:
+        - echo
+      operationId: sendEcho
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EchoRequest'
+      responses:
+        '200':
+          description: successful echo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EchoResponse'
+components:
+  schemas:
+    EchoRequest:
+      description: Echo request object
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 128
+      required:
+        - text
+    EchoResponse:
+      description: Echo response object
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        text:
+          type: string
+          minLength: 1
+          maxLength: 128
+      required:
+        - timestamp
+        - text
