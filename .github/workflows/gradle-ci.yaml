@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew releaseVersion --no-commit
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew printVersion build
 
       - name: Push new tag
         if: ${{ github.ref_name == github.event.repository.default_branch }}
