@@ -32,7 +32,7 @@ jobs:
 
       - name: Semantic release
         if: ${{ github.ref_name == github.event.repository.default_branch }}
-        run: ./gradlew build releaseVersion --no-commit
+        run: ./gradlew releaseVersion --no-commit
 
       - name: Push new tag
         if: ${{ github.ref_name == github.event.repository.default_branch }}
