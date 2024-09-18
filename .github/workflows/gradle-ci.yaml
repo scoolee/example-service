@@ -27,12 +27,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
       - name: Semantic release
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: ./gradlew releaseVersion --no-commit
+
+      - name: Build with Gradle
+        run: ./gradlew build
 
       - name: Push new tag
         if: ${{ github.ref_name == github.event.repository.default_branch }}
@@ -55,4 +55,4 @@ jobs:
         run: |
           tag=$(git describe --tags --abbrev=0)
           version=$(./gradlew -q printVersion)
-          ./gradlew -q printChangeLog | gh release create $tag -d -t "Release $version" -F -
+          ./gradlew -q printChangeLog | gh release create $tag -t "Release $version" -F -
