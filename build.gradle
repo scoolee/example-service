@@ -10,11 +10,6 @@ plugins {
 group = 'org.bezkres.scoolee'
 version = semver.version
 
-semver {
-	createReleaseCommit = false
-	createReleaseTag = true
-}
-
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
