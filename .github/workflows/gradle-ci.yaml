@@ -1,0 +1,69 @@
+name: Gradle CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Semantic release
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        run: ./gradlew build releaseVersion --no-commit
+
+      - name: Push new tag
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        run: git push origin --tags
+
+      - name: Build docker image
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        run: |
+          version=$(./gradlew -q printVersion)
+          ./gradlew jib -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=${{ secrets.GITHUB_TOKEN }} -Dimage=ghcr.io/${{ github.repository }}:$version
+
+      - name: Create GitHub release
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          version=$(./gradlew -q printVersion)
+          ./gradlew -q printChangeLog | gh release create $tag -d -t "${{ github.repository }} $version" -F -
+
+  dependency-submission:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
