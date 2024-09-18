@@ -32,26 +32,15 @@ jobs:
         run: ./gradlew releaseVersion --no-commit
 
       - name: Build with Gradle
-        run: |
-          ./gradlew printVersion
-          ./gradlew  build
-          ./gradlew printVersion 
+        run: ./gradlew  build
 
       - name: Push new tag
         if: ${{ github.ref_name == github.event.repository.default_branch }}
-        run: |
-          ./gradlew printVersion
-          git push origin --tags
-          ./gradlew printVersion
-
-      - name: Generate and submit dependency graph
-        if: ${{ github.ref_name == github.event.repository.default_branch }}
-        uses: gradle/actions/dependency-submission@v4
+        run: git push origin --tags
 
       - name: Build docker image
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: |
-          ./gradlew printVersion
           version=$(./gradlew -q printVersion)
           ./gradlew jib -Djib.to.auth.username=${{ github.actor }} -Djib.to.auth.password=${{ secrets.GITHUB_TOKEN }} -Djib.to.image=ghcr.io/${{ github.repository }}:$version
 
@@ -63,3 +52,7 @@ jobs:
           tag=$(git describe --tags --abbrev=0)
           version=$(./gradlew -q printVersion)
           ./gradlew -q printChangeLog | gh release create $tag -t "Release $version" -F -
+
+      - name: Generate and submit dependency graph
+        if: ${{ github.ref_name == github.event.repository.default_branch }}
+        uses: gradle/actions/dependency-submission@v4
