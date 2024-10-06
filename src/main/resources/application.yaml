@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: example-service
+management:
+  server:
+    port: 9090
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      livenessState:
+        enabled: true
+      readinessState:
+        enabled: true
