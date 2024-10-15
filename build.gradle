@@ -48,7 +48,7 @@ dependencies {
 }
 
 openApiGenerate {
-	inputSpec = "${rootDir}/src/main/resources/openapi/echo.yaml"
+	inputSpec = "${rootDir}/src/main/resources/openapi/echo.openapi.yaml"
 	validateSpec = true
 	generatorName = 'spring'
 	outputDir = "$rootDir/build/generated/sources/openapi"
@@ -84,4 +84,8 @@ jib {
 	from {
 		image = "eclipse-temurin:21"
 	}
+}
+
+springBoot {
+	buildInfo()
 }
