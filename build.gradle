@@ -48,7 +48,7 @@ dependencies {
 }
 
 openApiGenerate {
-	inputSpec = "${rootDir}/src/main/resources/openapi/echo.openapi.yaml"
+	inputSpec = "${rootDir}/src/main/resources/openapi/echo.oas.yaml"
 	validateSpec = true
 	generatorName = 'spring'
 	outputDir = "$rootDir/build/generated/sources/openapi"
