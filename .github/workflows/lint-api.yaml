@@ -2,17 +2,19 @@ name: Lint OpenAPI spec on Pull Requests
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint:
+    permissions:
+      checks: write
     name: Lint OpenAPI
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run Spectral
         uses: stoplightio/spectral-action@v0.8.11
         with:
-          file_glob: 'src/main/resources/openapi/*.openapi.yaml'
-          spectral_ruleset: 'https://raw.githubusercontent.com/SchwarzIT/api-linter-rules/main/spectral-api.yml'
+          file_glob: '*.oas.{json,yml,yaml}'
