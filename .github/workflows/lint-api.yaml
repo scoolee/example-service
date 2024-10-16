@@ -3,7 +3,10 @@ name: Lint OpenAPI spec on Pull Requests
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-
+    paths:
+      - '**.oas.yaml'
+      - '**.oas.yml'
+      - '**.oas.json'
 jobs:
   lint:
     permissions:
