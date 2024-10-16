@@ -4,9 +4,9 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - '**.oas.yaml'
-      - '**.oas.yml'
-      - '**.oas.json'
+      - '**/*.oas.yaml'
+      - '**/*.oas.yml'
+      - '**/*.oas.json'
 jobs:
   lint:
     permissions:
