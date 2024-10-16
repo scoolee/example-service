@@ -3,6 +3,7 @@ info:
   title: Echo API
   description: |-
     This is an OpenAPI 3 specification of very simple echo service.
+    It supports operations that echoes input.
   version: '1.0'
 tags:
   - name: echo
