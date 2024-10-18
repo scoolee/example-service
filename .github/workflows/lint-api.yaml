@@ -20,4 +20,4 @@ jobs:
       - name: Run Spectral
         uses: stoplightio/spectral-action@v0.8.11
         with:
-          file_glob: '*.oas.{json,yml,yaml}'
+          file_glob: 'src/**/*.oas.{json,yml,yaml}'
