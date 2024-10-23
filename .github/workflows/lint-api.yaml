@@ -4,9 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - '**/*.oas.yaml'
-      - '**/*.oas.yml'
-      - '**/*.oas.json'
+      - 'src/**/*oas.ya?ml'
+      - 'src/**/*oas.json'
+      - 'src/**/*openapi.ya?ml'
+      - 'src/**/*openapi.json'
 jobs:
   lint:
     permissions:
@@ -20,4 +21,4 @@ jobs:
       - name: Run Spectral
         uses: stoplightio/spectral-action@v0.8.11
         with:
-          file_glob: 'src/**/*.oas.{json,yml,yaml}'
+          file_glob: 'src/**/*{oas,openapi}.{json,yml,yaml}'

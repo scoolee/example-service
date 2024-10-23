@@ -47,6 +47,7 @@ components:
         timestamp:
           type: string
           format: date-time
+          maxLength: 30 # workaround for https://github.com/stoplightio/spectral-owasp-ruleset/issues/41
         text:
           type: string
           minLength: 1
