@@ -3,6 +3,7 @@ info:
   title: Echo API
   description: |-
     This is an OpenAPI 3 specification of very simple echo service.
+    It supports operations that echoes input.
   version: '1.0'
 tags:
   - name: echo
@@ -46,6 +47,7 @@ components:
         timestamp:
           type: string
           format: date-time
+          maxLength: 30 # workaround for https://github.com/stoplightio/spectral-owasp-ruleset/issues/41
         text:
           type: string
           minLength: 1

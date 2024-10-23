@@ -1,0 +1,6 @@
+extends:
+  - https://raw.githubusercontent.com/scoolee/api-guidelines/refs/tags/0.1.0/src/ruleset.yaml
+
+rules:
+  owasp:api2:2023-write-restricted: false
+  owasp:api4:2023-rate-limit: false

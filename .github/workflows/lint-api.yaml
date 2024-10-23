@@ -1,0 +1,24 @@
+name: Lint OpenAPI spec on Pull Requests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'src/**/*oas.ya?ml'
+      - 'src/**/*oas.json'
+      - 'src/**/*openapi.ya?ml'
+      - 'src/**/*openapi.json'
+jobs:
+  lint:
+    permissions:
+      checks: write
+    name: Lint OpenAPI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Run Spectral
+        uses: stoplightio/spectral-action@v0.8.11
+        with:
+          file_glob: 'src/**/*{oas,openapi}.{json,yml,yaml}'
